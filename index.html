@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>VibeBlog - Micro Blogging</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN / REGISTER PAGE
+===================================================== -->
+
+<div id="authPage"
+     class="auth-page">
+
+
+    <div class="auth-box">
+
+
+        <div class="auth-logo">
+
+            <i class="fa-solid fa-feather-pointed"></i>
+
+            VibeBlog
+
+        </div>
+
+
+        <p class="auth-subtitle">
+
+            Share your thoughts.
+            Connect with people.
+
+        </p>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+
+            <h2>
+                Welcome Back 👋
+            </h2>
+
+
+            <p class="form-info">
+
+                Login to continue
+
+            </p>
+
+
+            <input
+                type="text"
+                id="loginUsername"
+                placeholder="Username">
+
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password">
+
+
+            <button
+                class="main-btn"
+                onclick="login()">
+
+                Login
+
+            </button>
+
+
+            <p class="switch-text">
+
+                Don't have an account?
+
+                <span onclick="showRegister()">
+                    Register
+                </span>
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- REGISTER -->
+
+        <div id="registerForm"
+             class="hidden">
+
+
+            <h2>
+                Create Account 🚀
+            </h2>
+
+
+            <p class="form-info">
+
+                Join VibeBlog today
+
+            </p>
+
+
+            <input
+                type="text"
+                id="registerName"
+                placeholder="Full name">
+
+
+            <input
+                type="text"
+                id="registerUsername"
+                placeholder="Username">
+
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Password">
+
+
+            <button
+                class="main-btn"
+                onclick="register()">
+
+                Create Account
+
+            </button>
+
+
+            <p class="switch-text">
+
+                Already have an account?
+
+                <span onclick="showLogin()">
+                    Login
+                </span>
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN APPLICATION
+===================================================== -->
+
+<div id="app"
+     class="hidden">
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+
+            <i class="fa-solid fa-feather-pointed"></i>
+
+            Vibe<span>Blog</span>
+
+        </div>
+
+
+        <div class="search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search posts or users..."
+                oninput="searchContent()">
+
+        </div>
+
+
+        <div class="nav-user">
+
+
+            <span id="navUsername"></span>
+
+
+            <img
+                id="navAvatar"
+                src=""
+                alt="Profile">
+
+
+            <button
+                onclick="logout()"
+                title="Logout">
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+            </button>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+    <!-- MAIN LAYOUT -->
+
+    <div class="layout">
+
+
+        <!-- =================================================
+             LEFT SIDEBAR
+        ================================================== -->
+
+        <aside class="sidebar">
+
+
+            <!-- PROFILE CARD -->
+
+            <div class="profile-card">
+
+
+                <div class="cover"></div>
+
+
+                <img
+                    id="profileAvatar"
+                    class="profile-avatar"
+                    src=""
+                    alt="Profile">
+
+
+                <h3 id="profileName"></h3>
+
+
+                <p id="profileUsername"></p>
+
+
+                <p id="profileBio">
+                    Welcome to my VibeBlog profile ✨
+                </p>
+
+
+                <div class="stats">
+
+
+                    <div>
+
+                        <strong id="postCount">
+                            0
+                        </strong>
+
+                        <span>
+                            Posts
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong id="followerCount">
+                            0
+                        </strong>
+
+                        <span>
+                            Followers
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong id="followingCount">
+                            0
+                        </strong>
+
+                        <span>
+                            Following
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    class="edit-btn"
+                    onclick="openEditProfile()">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Edit Profile
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- MENU -->
+
+            <div class="menu">
+
+
+                <!-- HOME -->
+
+                <button
+                    class="menu-btn active"
+                    onclick="showHome()">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Home
+
+                </button>
+
+
+                <!-- MY POSTS -->
+
+                <button
+                    class="menu-btn"
+                    onclick="showMyPosts()">
+
+                    <i class="fa-solid fa-user"></i>
+
+                    My Posts
+
+                </button>
+
+
+                <!-- FOLLOWING -->
+
+                <button
+                    class="menu-btn"
+                    onclick="showFollowing()">
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Following
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- CREATE POST -->
+
+            <button
+                class="create-btn"
+                onclick="focusPostBox()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Create Post
+
+            </button>
+
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN FEED
+        ================================================== -->
+
+        <main class="feed">
+
+
+            <div class="page-heading">
+
+
+                <div>
+
+
+                    <h1 id="pageTitle">
+                        Home Feed
+                    </h1>
+
+
+                    <p id="pageSubtitle">
+                        See what people are sharing
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- CREATE POST -->
+
+            <div class="create-post">
+
+
+                <div class="create-top">
+
+
+                    <img
+                        id="createAvatar"
+                        class="small-avatar"
+                        src=""
+                        alt="You">
+
+
+                    <textarea
+                        id="postText"
+                        maxlength="280"
+                        placeholder="What's on your mind?"
+                        oninput="updateCharacterCount()">
+                    </textarea>
+
+
+                </div>
+
+
+
+                <!-- IMAGE PREVIEW -->
+
+                <div
+                    id="imagePreview"
+                    class="image-preview hidden">
+
+
+                    <img
+                        id="previewImage"
+                        src="">
+
+
+                    <button
+                        onclick="removeImage()">
+
+                        <i class="fa-solid fa-xmark"></i>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="create-bottom">
+
+
+                    <div class="post-options">
+
+
+                        <label for="imageInput">
+
+                            <i class="fa-regular fa-image"></i>
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="imageInput"
+                            accept="image/*"
+                            onchange="previewSelectedImage()">
+
+
+                        <span id="characterCount">
+                            0/280
+                        </span>
+
+
+                    </div>
+
+
+                    <button
+                        class="post-button"
+                        onclick="createPost()">
+
+                        Post
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- POSTS -->
+
+            <div id="postsContainer"></div>
+
+
+        </main>
+
+
+
+        <!-- =================================================
+             RIGHT SIDEBAR
+        ================================================== -->
+
+        <aside class="rightbar">
+
+
+            <!-- TRENDING -->
+
+            <div class="right-card">
+
+
+                <h2>
+                    🔥 Trending
+                </h2>
+
+
+                <div class="trend">
+
+
+                    <small>
+                        Technology
+                    </small>
+
+
+                    <strong>
+                        #ArtificialIntelligence
+                    </strong>
+
+
+                    <span>
+                        12.5K posts
+                    </span>
+
+
+                </div>
+
+
+                <div class="trend">
+
+
+                    <small>
+                        Programming
+                    </small>
+
+
+                    <strong>
+                        #Java
+                    </strong>
+
+
+                    <span>
+                        8.7K posts
+                    </span>
+
+
+                </div>
+
+
+                <div class="trend">
+
+
+                    <small>
+                        College
+                    </small>
+
+
+                    <strong>
+                        #CollegeLife
+                    </strong>
+
+
+                    <span>
+                        6.4K posts
+                    </span>
+
+
+                </div>
+
+
+                <div class="trend">
+
+
+                    <small>
+                        Design
+                    </small>
+
+
+                    <strong>
+                        #WebDevelopment
+                    </strong>
+
+
+                    <span>
+                        5.1K posts
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- PEOPLE TO FOLLOW -->
+
+            <div class="right-card">
+
+
+                <h2>
+                    👥 People to Follow
+                </h2>
+
+
+                <div id="suggestions"></div>
+
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     EDIT PROFILE MODAL
+===================================================== -->
+
+<div id="profileModal"
+     class="modal hidden">
+
+
+    <div class="modal-box">
+
+
+        <button
+            class="close-modal"
+            onclick="closeEditProfile()">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <h2>
+            Edit Profile
+        </h2>
+
+
+        <input
+            type="text"
+            id="editName"
+            placeholder="Name">
+
+
+        <input
+            type="text"
+            id="editBio"
+            placeholder="Bio">
+
+
+        <input
+            type="text"
+            id="editAvatar"
+            placeholder="Profile image URL">
+
+
+        <button
+            class="main-btn"
+            onclick="saveProfile()">
+
+            Save Changes
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div id="toast"
+     class="toast">
+
+
+    <i class="fa-solid fa-circle-check"></i>
+
+
+    <span></span>
+
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
